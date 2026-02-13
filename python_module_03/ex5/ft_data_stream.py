@@ -64,7 +64,6 @@ def main() -> None:
     for event in stream:
         total += 1
 
-        # показать первые 3 события
         if total <= 3:
             print(
                 f"Event {event['id']}: "
