@@ -12,7 +12,7 @@ def parse_args(arg: str) -> tuple[int, int, int]:
 
 def ft_coordinate_system() -> None:
     print("=== Game Coordinate System ===\n")
-    origin: tuple[int, int, int] = (0, 0, 0)
+    origin = (0, 0, 0)
     if len(sys.argv) < 2:
         return
     for arg in sys.argv[1:]:
@@ -21,7 +21,7 @@ def ft_coordinate_system() -> None:
             current_pos = parse_args(arg)
             x1, y1, z1 = origin
             x2, y2, z2 = current_pos
-            print(f"Position created: {arg}")
+            print(f"Position created: ({arg})")
             dx = x1 - x2
             dy = y1 - y2
             dz = z1 - z2

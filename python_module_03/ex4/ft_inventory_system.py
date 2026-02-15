@@ -21,8 +21,8 @@ def ft_inventory_system() -> None:
                 quantity = int(quantity_str)
                 inventory.update({name: quantity})
             except ValueError:
-                print("Ошибка: неверный формат аргумента", end="")
-                print(f" '{arg}', должно быть name:quantity")
+                print("Error: invalid argument format", end="")
+                print(f" '{arg}', should be name:quantity")
                 return
     total_items = 0
     for total in inventory.values():

@@ -53,9 +53,7 @@ def main() -> None:
     treasure = 0
     level_up = 0
 
-    stream = event_stream(total_events)
-
-    for event in stream:
+    for event in event_stream(total_events):
         total += 1
         if total <= 3:
             print(
