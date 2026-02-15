@@ -1,6 +1,6 @@
 import sys
 
-def ft_inventory_system():
+def ft_inventory_system() -> None:
     print("=== Inventory System Analysis ===")
 
     inventory = {}
@@ -16,9 +16,9 @@ def ft_inventory_system():
             quantity_str = arg[colon_index+1:]
             try:
                 quantity = int(quantity_str)
+                inventory.update({name: quantity})
             except ValueError:
                 print(f"Ошибка: неверный формат аргумента '{arg}', должно быть name:quantity")
-        inventory.update({name: quantity})
     total_items = 0
     for total in inventory.values():
         total_items += total
@@ -68,15 +68,8 @@ def ft_inventory_system():
     print(f"Restock needed: {restock}")
 
     print("\n=== Dictionary Properties Demo ===")
-    keys = [None] * len(inventory)
-    values = [None] * len(inventory)
-    i = 0
-    j = 0
-    for key, val in inventory.items():
-        keys[i] = key
-        values[j] = val
-        i += 1
-        j += 1
+    keys = list(inventory.keys())
+    values = list(inventory.values())
     print(f"Dictionary keys: {keys}")
     print(f"Dictionary values: {values}")
     name = "swordd"
