@@ -1,34 +1,33 @@
 def ft_data_alchemist() -> None:
     print("=== Data Alchemist Mastery ===\n")
-
-    raw_data: list[tuple[str, int, str]] = [
+    raw_data = [
         ("Alice", 120, "First Kill"),
         ("Bob", 85, "Treasure Hunter"),
         ("Charlie", 150, "Boss Slayer"),
         ("Alice", 50, "Speed Demon"),
         ("Eve", 200, "Perfectionist"),
-        ("Bob", 30, "Collector")
+        ("Bob", 30, "Boss Slayer")
     ]
-
-    high_scorers: list[str] = [player for player, score, ach in raw_data if score > 100]
-    print(f"High Scorers (List Comp): {high_scorers}")
-
-    unique_achievements: set[str] = {ach for _, _, ach in raw_data}
-    print(f"Unique Achievements (Set Comp): {unique_achievements}")
-
-    player_status: dict[str, str] = {
-        player: "Pro" if score > 100 else "Amateur" 
+    print("=== List Comprehension Examples ===")
+    high_scorers = [player for player, score, ach in raw_data if score > 100]
+    print(f"High Scorers: {high_scorers}")
+    print("\n=== Set Comprehension Examples ===")
+    unique_achievements = {ach for _, _, ach in raw_data}
+    print(f"Unique Achievements: {unique_achievements}")
+    print("\n=== Dict Comprehension Examples ===")
+    player_status = {
+        player: score
         for player, score, _ in raw_data
     }
-    print(f"Player Status Map (Dict Comp): {player_status}")
+    print(f"Player Status Map: {player_status}")
+    print("\n=== Combined Analysis ===")
+    print(f"Total players: {len(raw_data)}")
+    avg_score = sum(score for _, score, _ in raw_data) / len(raw_data)
+    print(f"Average score: {avg_score:.1F}")
+    print(f"Total unique achivements: {len(unique_achievements)}")
+    top = max(raw_data, key=lambda x: x[1])
+    print(f"Top performer: {top}")
 
-    report: list[str] = [
-        f"LOG: {p.upper()} achieved {a}" 
-        for p, s, a in raw_data if s >= 150
-    ]
-    print("\n=== Advanced Report ===")
-    for entry in report:
-        print(entry)
 
 if __name__ == "__main__":
     ft_data_alchemist()

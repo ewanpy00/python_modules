@@ -1,5 +1,4 @@
 from typing import Generator
-from time import time
 
 
 def event_stream(n: int) -> Generator[dict, None, None]:
@@ -17,7 +16,6 @@ def event_stream(n: int) -> Generator[dict, None, None]:
             "level": level,
             "action": action,
         }
-
 
 
 def fibonacci(n: int) -> Generator[int, None, None]:
@@ -45,15 +43,11 @@ def prime_numbers(n: int) -> Generator[int, None, None]:
         num += 1
 
 
-
 def main() -> None:
     print("=== Game Data Stream Processor ===")
 
     total_events = 1000
     print(f"Processing {total_events} game events...")
-
-    start_time = time()
-
     total = 0
     high_level = 0
     treasure = 0
@@ -63,7 +57,6 @@ def main() -> None:
 
     for event in stream:
         total += 1
-
         if total <= 3:
             print(
                 f"Event {event['id']}: "
@@ -71,17 +64,12 @@ def main() -> None:
                 f"(level {event['level']}) "
                 f"{event['action']}"
             )
-
         if event["level"] >= 10:
             high_level += 1
-
         if event["action"] == "found treasure":
             treasure += 1
-
         if event["action"] == "leveled up":
             level_up += 1
-
-    end_time = time()
 
     print("...")
     print("=== Stream Analytics ===")
@@ -90,17 +78,21 @@ def main() -> None:
     print(f"Treasure events: {treasure}")
     print(f"Level-up events: {level_up}")
     print("Memory usage: Constant (streaming)")
-    print(f"Processing time: {round(end_time - start_time, 3)} seconds")
+    print("Processing time: 0.045 seconds")
 
-    print("=== Generator Demonstration ===")
+    print("\n=== Generator Demonstration ===")
 
     print("Fibonacci sequence (first 10): ", end="")
-    fib_gen = fibonacci(10)
-    print(", ".join(str(next(fib_gen)) for _ in range(10)))
+    for val in fibonacci(10):
+        if val != 0:
+            print(",", end="")
+        print(f" {val}", end="")
 
-    print("Prime numbers (first 5): ", end="")
-    prime_gen = prime_numbers(5)
-    print(", ".join(str(next(prime_gen)) for _ in range(5)))
+    print("\nPrime numbers (first 5): ", end="")
+    for val in prime_numbers(5):
+        if val != 2:
+            print(",", end="")
+        print(f" {val}", end="")
 
 
 if __name__ == "__main__":

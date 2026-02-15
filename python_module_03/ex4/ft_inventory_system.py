@@ -1,16 +1,19 @@
 import sys
 
+
 def ft_inventory_system() -> None:
     print("=== Inventory System Analysis ===")
 
     inventory = {}
-    try:
-        args = sys.argv[1:]
-    except AttributeError:
-        print("Incorrect amount of agruments")
-
+    if len(sys.argv) == 1:
+        print("Error: Ivalid amount of arguments!")
+        return
     for arg in sys.argv[1:]:
-        colon_index = arg.find(":")
+        colon_index = -1
+        for i in range(len(arg)):
+            if arg[i] == ":":
+                colon_index = i
+                break
         if colon_index != -1:
             name = arg[:colon_index]
             quantity_str = arg[colon_index+1:]
@@ -18,7 +21,9 @@ def ft_inventory_system() -> None:
                 quantity = int(quantity_str)
                 inventory.update({name: quantity})
             except ValueError:
-                print(f"Ошибка: неверный формат аргумента '{arg}', должно быть name:quantity")
+                print("Ошибка: неверный формат аргумента", end="")
+                print(f" '{arg}', должно быть name:quantity")
+                return
     total_items = 0
     for total in inventory.values():
         total_items += total
@@ -35,11 +40,11 @@ def ft_inventory_system() -> None:
     max_value = None
 
     for item, value in inventory.items():
-        if min_value == None or min_value > value:
+        if min_value is None or min_value > value:
             min_key = item
             min_value = value
     for item, value in inventory.items():
-        if max_value == None or max_value < value:
+        if max_value is None or max_value < value:
             max_key = item
             max_value = value
     print(f"Most abundant: {max_key} ({max_value} units)")
@@ -54,7 +59,7 @@ def ft_inventory_system() -> None:
             scarce.update({item: quan})
         elif(quan >= 5 and quan < 10):
             moderate.update({item: quan})
-        elif(quan > 10):
+        elif(quan >= 10):
             abundant.update({item: quan})
     print(f"Moderate: {moderate}")
     print(f"Scarce: {scarce}")
