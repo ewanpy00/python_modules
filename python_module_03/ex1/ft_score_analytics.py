@@ -23,8 +23,8 @@ def ft_score_analytics() -> None:
         print(f"High score: {max_val}")
         print(f"Low score: {min_val}")
         print(f"Score range: {max_val - min_val}")
-    except Exception:
-        print("Enter the valid arguments!!!")
+    except Exception as e:
+        print("Enter the valid arguments! Error:", e)
 
 
 if __name__ == "__main__":

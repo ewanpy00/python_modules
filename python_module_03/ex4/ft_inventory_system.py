@@ -16,13 +16,19 @@ def ft_inventory_system() -> None:
                 break
         if colon_index != -1:
             name = arg[:colon_index]
+            if name in inventory:
+                print("Duplicate was found!!!")
+                return
             quantity_str = arg[colon_index+1:]
             try:
                 quantity = int(quantity_str)
+                if quantity <= 0:
+                    raise ValueError
                 inventory.update({name: quantity})
             except ValueError:
                 print("Error: invalid argument format", end="")
-                print(f" '{arg}', should be name:quantity")
+                print(f" '{arg}', should be name:quantity", end="")
+                print("\nName and quality should have valid values")
                 return
     total_items = 0
     for total in inventory.values():

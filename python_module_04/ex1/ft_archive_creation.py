@@ -1,4 +1,4 @@
-def ft_archive_creation():
+def ft_archive_creation() -> None:
     print("=== CYBER ARCHIVES - PRESERVATION SYSTEM ===")
     try:
         print("\nInitializing new storage unit: new_discovery.txt")
@@ -11,4 +11,6 @@ def ft_archive_creation():
         print("Archive 'new_discovery.txt' ready for long-term preservation.")
     except Exception as e:
         print(f"{e}")
-    
+
+if __name__ == "__main__":
+    ft_archive_creation()

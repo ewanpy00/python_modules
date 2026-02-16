@@ -4,9 +4,12 @@ import math
 
 def parse_args(arg: str) -> tuple[int, int, int]:
     result = arg.split(",")
-    x = int(result[0])
-    y = int(result[1])
-    z = int(result[2])
+    try:
+        x = int(result[0])
+        y = int(result[1])
+        z = int(result[2])
+    except Exception:
+        print("Invalid amount of arguments!")
     return x, y, z
 
 
@@ -18,10 +21,14 @@ def ft_coordinate_system() -> None:
     for arg in sys.argv[1:]:
         print(f'Parsing coordinates: "{arg}"')
         try:
-            current_pos = parse_args(arg)
+            try:
+                current_pos = parse_args(arg)
+            except Exception:
+                print("Error while parsing the arguments")
+                break
             x1, y1, z1 = origin
             x2, y2, z2 = current_pos
-            print(f"Position created: ({arg})")
+            print(f"Position created: ({x2}, {y2}, {z2})")
             dx = x1 - x2
             dy = y1 - y2
             dz = z1 - z2
