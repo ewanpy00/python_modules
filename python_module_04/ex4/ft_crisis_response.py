@@ -33,3 +33,6 @@ def ft_crisis_response() -> None:
         print("RESPONSE An error occured while proccessing the file", e)
         print("STATUS: Failure")
     print("\nAll crisis scenarios handled successfully. Archives secure.")
+
+if __name__ == "__main__":
+    ft_crisis_response()
