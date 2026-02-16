@@ -12,5 +12,6 @@ def ft_archive_creation() -> None:
     except Exception as e:
         print(f"{e}")
 
+
 if __name__ == "__main__":
     ft_archive_creation()
