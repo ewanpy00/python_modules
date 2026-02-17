@@ -3,7 +3,7 @@ from typing import Generator
 
 def event_stream(n: int) -> Generator[dict, None, None]:
     players = ["alice", "bob", "charlie"]
-    actions = ["killed monster", "found treasure", "leveled up"]
+    actions = []
 
     for i in range(1, n + 1):
         player = players[i % len(players)]
@@ -53,44 +53,50 @@ def main() -> None:
     treasure = 0
     level_up = 0
 
-    for event in event_stream(total_events):
-        total += 1
-        if total <= 3:
-            print(
-                f"Event {event['id']}: "
-                f"Player {event['player']} "
-                f"(level {event['level']}) "
-                f"{event['action']}"
-            )
-        if event["level"] >= 10:
-            high_level += 1
-        if event["action"] == "found treasure":
-            treasure += 1
-        if event["action"] == "leveled up":
-            level_up += 1
+    try:
+        for event in event_stream(total_events):
+            total += 1
+            if total <= 3:
+                print(
+                    f"Event {event['id']}: "
+                    f"Player {event['player']} "
+                    f"(level {event['level']}) "
+                    f"{event['action']}"
+                )
+            if event["level"] >= 10:
+                high_level += 1
+            if event["action"] == "found treasure":
+                treasure += 1
+            if event["action"] == "leveled up":
+                level_up += 1
 
-    print("...")
-    print("=== Stream Analytics ===")
-    print(f"Total events processed: {total}")
-    print(f"High-level players (10+): {high_level}")
-    print(f"Treasure events: {treasure}")
-    print(f"Level-up events: {level_up}")
-    print("Memory usage: Constant (streaming)")
-    print("Processing time: 0.045 seconds")
-
+        print("...")
+        print("=== Stream Analytics ===")
+        print(f"Total events processed: {total}")
+        print(f"High-level players (10+): {high_level}")
+        print(f"Treasure events: {treasure}")
+        print(f"Level-up events: {level_up}")
+        print("Memory usage: Constant (streaming)")
+        print("Processing time: 0.045 seconds")
+    except Exception as e:
+        print("An error occured", e)
     print("\n=== Generator Demonstration ===")
-
-    print("Fibonacci sequence (first 10): ", end="")
-    for val in fibonacci(10):
-        if val != 0:
-            print(",", end="")
-        print(f" {val}", end="")
-
-    print("\nPrime numbers (first 5): ", end="")
-    for val in prime_numbers(5):
-        if val != 2:
-            print(",", end="")
-        print(f" {val}", end="")
+    try:
+        print("Fibonacci sequence (first 10): ", end="")
+        for val in fibonacci(10):
+            if val != 0:
+                print(",", end="")
+            print(f" {val}", end="")
+    except Exception as e:
+        print("An error occured:", e)
+    try:
+        print("\nPrime numbers (first 5): ", end="")
+        for val in prime_numbers(5):
+            if val != 2:
+                print(",", end="")
+            print(f" {val}", end="")
+    except Exception as e:
+        print("An error occured:", e)
 
 
 if __name__ == "__main__":
