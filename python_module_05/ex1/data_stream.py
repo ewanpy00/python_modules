@@ -22,14 +22,12 @@ class SensorStream():
         self.super(stream_id)
 
     def filter_data(self, data_batch: List[Any], criteria: Optional[str]= None) -> List[Any]:
-        # return [element for element in data_batch if isinstance(element, dict())]
         clear_data = []
         for element in data_batch:
             if isinstance(element, dict):
                 required_keys = ["temp", "humidity", "pressure"]
-                
-                if isinstance(element["temp"], (int, float)) and isinstance(element["humidity"], (int, float)) and isinstance(element["humidity"], (int, float)):
-                    clear_data += [element]
+                if element in required_keys:
+                  if element[]  
             
     # add criteria
             
@@ -42,7 +40,7 @@ class SensorStream():
             sum = 0
             count = 0
             for data in data_batch:
-                sum += data.items()
+                sum += data["temp"]
                 count += 1
             return f"Sensor analysis: {count} readings processed, avg temp: {sum/count:.2F}°C"
         except Exception as e:
