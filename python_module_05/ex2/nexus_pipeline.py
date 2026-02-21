@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, Protocol
+from typing import Any, List, Protocol
 
 # ---------------------------------------STAGES---------------------------------------
 
@@ -57,7 +57,7 @@ class ProcessingPipeline(ABC):
         for element in list:
             self.add_stage(element)
 
-    def run_pipeline(self, data: Any):
+    def run_pipeline(self, data: Any) -> Any:
         current_result = data
         current_num = 0
         
@@ -71,9 +71,6 @@ class ProcessingPipeline(ABC):
                 return None
         return current_result
 
-    def validate_data(self, data):
-        if data is None:
-            self.logs += [""]
     @abstractmethod
     def process(self, data: Any):
         pass
@@ -81,17 +78,17 @@ class ProcessingPipeline(ABC):
 # ---------------------------------------ADAPTERS---------------------------------------
 
 class JSONAdapter(ProcessingPipeline):
-    def process(self, data: Any):
+    def process(self, data: Any) -> None:
         print("\nProcessing JSON data through pipeline...")
         self.run_pipeline(data)
 
 class CSVAdapter(ProcessingPipeline):
-    def process(self, data: Any):
+    def process(self, data: Any) -> None:
         print("\nProcessing CSV data through same pipeline...")
         self.run_pipeline(data)
 
 class StreamAdapter(ProcessingPipeline):
-    def process(self, data: Any):
+    def process(self, data: Any) -> None:
         print("\nProcessing Stream data through same pipeline...")
         self.run_pipeline(data)
 
@@ -101,12 +98,16 @@ class NexusManager:
     def __init__(self):
         print("Initializing Nexus Manager...")
         self.pipelines = []
+        self.pipelines: List[ProcessingPipeline] = []
+
+    def add_pipeLine(self, pipeline: ProcessingPipeline) -> None:
+        self.pipelines +=  [pipeline]
 
 # ---------------------------------------MAIN---------------------------------------
 
 def main():
     print("=== CODE NEXUS - ENTERPRISE PIPELINE SYSTEM ===\n")
-    nexus_manager = NexusManager()
+    nexus = NexusManager()
     print("Pipeline capacity: 1000 streams/second\n")
 
     print("Creating Data Processing Pipeline...")
@@ -126,21 +127,20 @@ def main():
 
     json_pipe = JSONAdapter("JSON")
     json_pipe.add_stages(json_stages)
-    
-    csv_pipe = CSVAdapter("CSV")
-    csv_pipe._stages = csv_stages 
-    
-    stream_pipe = StreamAdapter("STREAM")
-    stream_pipe._stages = stream_stages
 
-    print("\n=== Multi-Format Data Processing ===\n")
+    csv_pipe = CSVAdapter("CSV")
+    csv_pipe.stages = csv_stages 
+
+    stream_pipe = StreamAdapter("STREAM")
+    stream_pipe.stages = stream_stages
+
+    print("\n=== Multi-Format Data Processing ===")
 
 
     json_pipe.process({"sensor": "temp", "value": 23.5, "unit": "C"})    
     csv_pipe.process("user,action,timestamp")
     stream_pipe.process("Real-time sensor stream")
 
-    print("\n=== Pipeline Chaining Demo ===")
     i = 65
     for _ in json_stages:
         if i == 65:

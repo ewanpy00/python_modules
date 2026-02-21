@@ -57,7 +57,7 @@ class SensorStream(DataStream):
             if count == 0:
                 return "Sensor analysis: 0 readings processed"
 
-            avg_temp = sum/count
+            avg_temp = total_sum/count
             self.total_processed += count
             return f"{count}readings processed, avg temp: {avg_temp:.1f}°C"
         except Exception:
@@ -113,10 +113,10 @@ class StreamProcessor:
     def __init__(self):
         self.streams: List[DataStream] = []
 
-    def add_stream(self, stream: DataStream):
+    def add_stream(self, stream: DataStream) -> None:
         self.streams += [stream]
 
-    def process_all(self, batches: List[List[Any]]):
+    def process_all(self, batches: List[List[Any]]) -> None:
         print("\n=== Polymorphic Stream Processing ===")
         print("Processing mixed stream types through unified interface...")
         i = 0
