@@ -1,6 +1,5 @@
-from collections import Counter
 from abc import ABC, abstractmethod
-from typing import List, Any, Protocol, Union
+from typing import Any, Protocol
 
 # ---------------------------------------STAGES---------------------------------------
 
@@ -44,7 +43,7 @@ class OutputStage:
 
 class ProcessingPipeline(ABC):
     def __init__(self, pipeline_id: str):
-        self._stages = []
+        self.stages = []
         self.pipe_id = pipeline_id
         self.stage_count = 0
         self.logs = []
@@ -52,7 +51,7 @@ class ProcessingPipeline(ABC):
     def add_stage(self, stage: ProcessingStage) -> None:
         self.stage_count += 1
         print(f"Stage {self.stage_count}: {stage.description}")
-        self._stages += [stage]
+        self.stages += [stage]
 
     def add_stages(self, list):
         for element in list:
@@ -62,7 +61,7 @@ class ProcessingPipeline(ABC):
         current_result = data
         current_num = 0
         
-        for stage in self._stages:
+        for stage in self.stages:
             current_num += 1
             current_result = stage.process(current_result)
             

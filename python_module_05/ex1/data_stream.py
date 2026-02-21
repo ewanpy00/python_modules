@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional, Union
 
+
 class DataStream(ABC):
     def __init__(self, stream_id: str):
         self.stream_id = stream_id
@@ -11,7 +12,9 @@ class DataStream(ABC):
     def process_batch(self, data_batch: List[Any]) -> str:
         pass
 
-    def filter_data(self, data_batch: List[Any], criteria: Optional[str] = None) -> List[Any]:
+    def filter_data(
+            self, data_batch: List[Any], criteria: Optional[str] = None
+            ) -> List[Any]:
         return data_batch
 
     def get_stats(self) -> Dict[str, Union[str, int, float]]:
@@ -26,9 +29,10 @@ class SensorStream(DataStream):
     def __init__(self, stream_id: str):
         print("\nInitializing Sensor Stream...")
         super().__init__(stream_id)
-        self.criteria = "Positive values"
 
-    def filter_data(self, data_batch: List[Any], criteria: Optional[str] = None) -> List[Any]:
+    def filter_data(
+            self, data_batch: List[Any], criteria: Optional[str] = None
+            ) -> List[Any]:
         clear_data = []
         for element in data_batch:
             if isinstance(element, dict) and "temp" in element:
@@ -46,16 +50,16 @@ class SensorStream(DataStream):
         try:
             clear_data = self.filter_data(data_batch, self.criteria)
             count = 0
-            sum = 0
+            total_sum = 0
             for element in clear_data:
                 count += 1
-                sum += element["temp"]
+                total_sum += element["temp"]
             if count == 0:
                 return "Sensor analysis: 0 readings processed"
-            
+
             avg_temp = sum/count
             self.total_processed += count
-            return f"Sensor analysis: {count} readings processed, avg temp: {avg_temp:.1f}°C"
+            return f"{count}readings processed, avg temp: {avg_temp:.1f}°C"
         except Exception:
             self.error_count += 1
             return "Error occurred during the processing"
@@ -73,12 +77,14 @@ class TransactionStream(DataStream):
             count = 0
             net_flow = 0
             for data in data_batch:
-                if "buy" in data: net_flow -= data["buy"]
-                if "sell" in data: net_flow += data["sell"]
+                if "buy" in data:
+                    net_flow -= data["buy"]
+                if "sell" in data:
+                    net_flow += data["sell"]
                 count += 1
-            
+
             self.total_processed += count
-            return f"Transaction analysis: {count} operations, net flow: {net_flow:+} units"
+            return f"{count} operations, net flow: {net_flow:+} units"
         except Exception:
             self.error_count += 1
             return "Error processing transactions"
@@ -102,6 +108,7 @@ class EventStream(DataStream):
         self.error_count += errors
         return f"Event analysis: {count} events, {errors} error detected"
 
+
 class StreamProcessor:
     def __init__(self):
         self.streams: List[DataStream] = []
@@ -118,18 +125,21 @@ class StreamProcessor:
             i += 1
             print(f"- {result}")
 
+
 def main():
     print("=== CODE NEXUS - POLYMORPHIC STREAM SYSTEM ===")
 
     sensor = SensorStream("SENSOR_001")
-    sensor_data = [{"temp":22.5, "humidity":65, "pressure":2},
-                   {"temp":10, "humidity":65, "pressure":10},
-                   {"temp":-10, "humidity":65, "pressure":1}
-                        ]
+    sensor_data = [{"temp": 22.5, "humidity": 65, "pressure": 2},
+                   {"temp": 10, "humidity": 65, "pressure": 10},
+                   {"temp": -10, "humidity": 65, "pressure": 1}
+                   ]
     sensor.process_batch(sensor_data)
 
     transaction = TransactionStream("TRANS_001")
-    trans_data = [{"buy": 100}, {"sell": 150}, {"buy": 120}, {"buy": 12}, {"sell": 120}]
+    trans_data = [
+        {"buy": 100}, {"sell": 150}, {"buy": 120}, {"buy": 12}, {"sell": 120}
+        ]
     transaction.process_batch(trans_data)
 
     event = EventStream("EVENT_001")
@@ -142,8 +152,9 @@ def main():
     manager.add_stream(event)
 
     manager.process_all([sensor_data, trans_data, event_data])
-    
+
     print("\nAll streams processed successfully. Nexus throughput optimal.")
+
 
 if __name__ == "__main__":
     main()
