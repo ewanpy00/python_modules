@@ -29,6 +29,7 @@ class SensorStream(DataStream):
     def __init__(self, stream_id: str):
         print("\nInitializing Sensor Stream...")
         super().__init__(stream_id)
+        self.criteria = "Positive values"
 
     def filter_data(
             self, data_batch: List[Any], criteria: Optional[str] = None

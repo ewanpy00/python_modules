@@ -97,7 +97,6 @@ class StreamAdapter(ProcessingPipeline):
 class NexusManager:
     def __init__(self):
         print("Initializing Nexus Manager...")
-        self.pipelines = []
         self.pipelines: List[ProcessingPipeline] = []
 
     def add_pipeLine(self, pipeline: ProcessingPipeline) -> None:
@@ -129,10 +128,10 @@ def main():
     json_pipe.add_stages(json_stages)
 
     csv_pipe = CSVAdapter("CSV")
-    csv_pipe.stages = csv_stages 
+    csv_pipe.add_stages(csv_stages)
 
     stream_pipe = StreamAdapter("STREAM")
-    stream_pipe.stages = stream_stages
+    stream_pipe.add_stages(stream_stages)
 
     print("\n=== Multi-Format Data Processing ===")
 
