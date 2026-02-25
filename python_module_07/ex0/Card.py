@@ -10,7 +10,7 @@ class Card(ABC):
     
     @abstractmethod
     def play(self, game_state: dict) -> dict:
-        print(f"\nPlaying {self.name} with {self.total_mana} mana available:")
+        print(f"Playing {self.name} with {self.total_mana} mana available:")
         if self.is_playable(self.total_mana) == True:
             print("Playable: True")
             self.total_mana -= self.cost
