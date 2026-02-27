@@ -4,6 +4,8 @@ class SpellCard(Card):
     def __init__(self, name: str, cost: int, rarity: str, effect_type: str):
         super().__init__(name, cost, rarity)
         self.effect_type = effect_type
+        self.attack = 10
+        self.health = 5
 
     def play(self, game_state: dict) -> dict:
         print(f"Playing {self.name} with {self.total_mana} mana available:")

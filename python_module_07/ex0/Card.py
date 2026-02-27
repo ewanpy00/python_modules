@@ -19,7 +19,6 @@ class Card(ABC):
             print("Playable: False")
 
     def get_card_info(self) -> dict:
-        print("CreatureCard Info:")
         return {
             'name': self.name,
             'cost': self.cost,
