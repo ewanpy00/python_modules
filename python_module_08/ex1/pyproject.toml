@@ -1,0 +1,12 @@
+[tool.poetry]
+name = "matrix-project"
+version = "0.1.0"
+description = "Matrix data analysis"
+authors = ["ipykhtin"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pandas = "*"
+numpy = "*"
+matplotlib = "*"
+requests = "*"
